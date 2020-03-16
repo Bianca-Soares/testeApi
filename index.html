@@ -16,7 +16,7 @@
                 <h2>Consultar dados do Bolsa Família</h2>
                 <form id = "dadosBolsaF">
                     <div class="form-group mt-5">
-                      <label for="mes">Mês</label>
+                      Mês
                       <select class="form-control" id="mes" name = "mes" required aria-describedby="mesHelper">
                         <option value = 01>Janeiro</option>
                         <option value = 02>Fevereiro</option>
@@ -33,7 +33,7 @@
 					            </select>
 					          </div>
                     <div class="form-group">
-                      <label for="ano">Ano</label>
+                        Ano
                       <select class="form-control" id="ano" name = "ano" aria-describedby="anoHelper">
                         <option>2013</option>
                         <option>2014</option>
@@ -46,30 +46,31 @@
                     </div>
 					          <div class="row">
 					              <div class="col-6">
-                            <div class="form-group">
-                               Consultar por: Código do Município
-                                <input class="form-control" id="municipio" name = "municipio">
-                            </div>
-                            <button id  = "consultarMuniBtn" type="submit" class="btn btn-primary">Consultar</button>
-                            <br>
-                            <br>
-                
-                            <div id="exibirDados">
-                                <section class='panel panel-default'> Resultados </section>
-                            </div>
+                          <div class="form-group">
+                            Consultar por: CPF/NIS
+                            <input  class= "form-control" id="cpf" name = "cpf">
+                          </div>
+                          <button id= "consultarCpfBtn" type="submit" class="btn btn-primary">Consultar</button>
+                          <br>
+                          <br>
+                           
+                          <div id="exibirDadosCPF">
+                            <section class='panel panel-default'> Resultados </section></div>     
+
                         </div>
             
             <div class="col-6">
-                <div class="form-group">
-                  Consultar por: CPF/NIS
-						      <input  class= "form-control" id="cpf" name = "cpf">
-					      </div>
-                <button id= "consultarCpfBtn" type="submit" class="btn btn-primary">Consultar</button>
-                <br>
-                <br>
-                 
-                <div id="exibirDadosCPF">
-                  <section class='panel panel-default'> Resultados </section></div>      
+              <div class="form-group">
+                Consultar por: Código do Município
+                 <input class="form-control" id="municipio" name = "municipio">
+             </div>
+             <button id  = "consultarMuniBtn" type="submit" class="btn btn-primary">Consultar</button>
+             <br>
+             <br>
+ 
+             <div id="exibirDados">
+                 <section class='panel panel-default'> Resultados </section>
+             </div>
             </div>
             <br>
           </div>
@@ -92,9 +93,9 @@ function consultarMuni(event) {
   
     event.preventDefault();
     const formData = new FormData(this);
-    const anoMes = formData.get("ano") + formData.get("mes");
+    const mesAno = formData.get("ano") + formData.get("mes");
     const codigoIbge = formData.get("municipio");
-    const request = "http://www.transparencia.gov.br/api-de-dados/bolsa-familia-por-municipio?mesAno="+anoMes+"&codigoIbge="+codigoIbge+"&pagina="+1;
+    const request = "http://www.transparencia.gov.br/api-de-dados/bolsa-familia-por-municipio?mesAno="+mesAno+"&codigoIbge="+codigoIbge+"&pagina="+1;
 
     window.fetch(request, {
         method: 'get',
@@ -113,16 +114,16 @@ $('#exibirDados').html("<section class='panel panel-default'> "
              + "<p> Município: " +data[0]["municipio"]["nomeIBGE"] + "</p>"
              + "<p> Valor Total: " +data[0]["valor"]  + "</p>"
              + "<p> Total de Beneficiados: " +data[0]["quantidadeBeneficiados"]  + "</p>"
-             + "</section>");
+             + "</section>");  
 }
 
 function consultarCpf(event) {
    
     event.preventDefault();
     const formData = new FormData(this);
-    const anoMes = formData.get("ano") + formData.get("mes");
+    const mesAno = formData.get("ano") + formData.get("mes");
     const cpf = formData.get("cpf");
-    const request = "http://www.transparencia.gov.br/api-de-dados/bolsa-familia-disponivel-por-cpf-ou-nis?codigo="+cpf+"&anoMesReferencia="+anoMes+"&anoMesCompetencia="+mesAno+"&pagina="+1;
+    const request = "http://www.transparencia.gov.br/api-de-dados/bolsa-familia-disponivel-por-cpf-ou-nis?codigo="+cpf+"&anoMesReferencia="+mesAno+"&anoMesCompetencia="+mesAno+"&pagina="+1;
 
     window.fetch(request, {
         method: 'get',
@@ -142,6 +143,7 @@ function mostrarDadosCpf(data) {
              + "<p> Município: " + data[0]["municipio"]["nomeIBGE"]  + "</p>"
              + "<p> Valor recebido: " + data[0]["valor"]  + "</p>"
              + "</section>");
+
 }
 	</script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
